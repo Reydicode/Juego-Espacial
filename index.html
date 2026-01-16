@@ -20,6 +20,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         #gameContainer {
@@ -28,6 +31,13 @@
             max-width: 1200px;
             height: 100vh;
             max-height: 800px;
+        }
+
+        @media (max-width: 768px) {
+            #gameContainer {
+                max-width: 100vw;
+                max-height: 100vh;
+            }
         }
 
         #gameCanvas {
@@ -65,6 +75,20 @@
             animation: glow 2s ease-in-out infinite;
         }
 
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+        }
+
         @keyframes glow {
             0%, 100% { text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
             50% { text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 80px #00ffff; }
@@ -82,12 +106,29 @@
             font-family: 'Courier New', monospace;
             transition: all 0.3s;
             box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        button:hover {
+        button:hover, button:active {
             transform: scale(1.1);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        @media (max-width: 768px) {
+            button {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+                margin: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 10px 25px;
+                font-size: 1rem;
+                margin: 6px;
+            }
         }
 
         button:disabled {
@@ -107,6 +148,24 @@
             font-family: 'Courier New', monospace;
             width: 300px;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            input {
+                width: 80%;
+                max-width: 300px;
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            input {
+                width: 90%;
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
         }
 
         input::placeholder {
@@ -331,6 +390,144 @@
             font-size: 0.9rem;
             margin-top: 10px;
         }
+
+        /* ========== CONTROLES TÁCTILES MÓVILES ========== */
+        #mobileControls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: none;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        #mobileControls.active {
+            display: flex;
+        }
+
+        .joystick-container {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            pointer-events: all;
+        }
+
+        .joystick-base {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 255, 0.2);
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .joystick-stick {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #00ffff, #0088ff);
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .shoot-button {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ff0066, #cc0044);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 102, 0.8);
+            pointer-events: all;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .shoot-button:active {
+            transform: scale(0.9);
+            box-shadow: 0 0 30px rgba(255, 0, 102, 1);
+        }
+
+        @media (min-width: 769px) {
+            #mobileControls {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .controls-info {
+                font-size: 0.8rem;
+            }
+            
+            .player-stats {
+                min-width: 180px;
+                padding: 10px;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+            
+            .score {
+                font-size: 1.2rem;
+            }
+            
+            .health-bar {
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #hud {
+                padding: 0 10px;
+                top: 10px;
+            }
+            
+            .player-stats {
+                min-width: 140px;
+                padding: 8px;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+            
+            .score {
+                font-size: 1rem;
+            }
+            
+            .health-bar {
+                height: 15px;
+            }
+            
+            .joystick-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .joystick-stick {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .shoot-button {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -445,6 +642,15 @@
         </div>
 
         <div id="centerInfo"></div>
+
+        <!-- Controles Móviles -->
+        <div id="mobileControls">
+            <div class="joystick-container" id="joystick">
+                <div class="joystick-base"></div>
+                <div class="joystick-stick" id="joystickStick"></div>
+            </div>
+            <div class="shoot-button" id="shootButton">🔥</div>
+        </div>
 
         <canvas id="gameCanvas"></canvas>
     </div>
@@ -647,7 +853,7 @@
             }
         }
 
-        // ========== SISTEMA MULTIJUGADOR ==========
+        // ========== SISTEMA MULTIJUGADOR CON PERSISTENT STORAGE ==========
         
         class MultiplayerManager {
             constructor() {
@@ -656,7 +862,7 @@
                 this.playerName = '';
                 this.opponentName = '';
                 this.syncInterval = null;
-                this.rooms = {}; // Simulación de base de datos en memoria
+                this.checkInterval = null;
             }
 
             generateRoomCode() {
@@ -668,98 +874,143 @@
                 this.isHost = true;
                 this.playerName = hostName;
                 
-                // Crear sala en "base de datos"
-                this.rooms[this.roomCode] = {
-                    host: hostName,
-                    guest: null,
-                    gameState: null,
-                    status: 'waiting',
-                    createdAt: Date.now()
-                };
-                
-                // Simular verificación periódica de si alguien se unió
-                this.checkForOpponent();
-                
-                return this.roomCode;
+                try {
+                    // Crear sala en persistent storage (compartido entre usuarios)
+                    const roomData = {
+                        host: hostName,
+                        guest: null,
+                        gameState: null,
+                        status: 'waiting',
+                        createdAt: Date.now()
+                    };
+                    
+                    await window.storage.set(`room:${this.roomCode}`, JSON.stringify(roomData), true);
+                    
+                    // Verificar periódicamente si alguien se unió
+                    this.checkForOpponent();
+                    
+                    return this.roomCode;
+                } catch (error) {
+                    console.error('Error creando sala:', error);
+                    throw error;
+                }
             }
 
-            checkForOpponent() {
-                const checkInterval = setInterval(() => {
-                    const room = this.rooms[this.roomCode];
-                    if (room && room.guest) {
-                        this.opponentName = room.guest;
-                        clearInterval(checkInterval);
-                        game.startOnlineGame();
+            async checkForOpponent() {
+                this.checkInterval = setInterval(async () => {
+                    try {
+                        const result = await window.storage.get(`room:${this.roomCode}`, true);
+                        if (result && result.value) {
+                            const room = JSON.parse(result.value);
+                            if (room.guest) {
+                                this.opponentName = room.guest;
+                                clearInterval(this.checkInterval);
+                                game.startOnlineGame();
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error verificando oponente:', error);
                     }
                 }, 1000);
             }
 
             async joinRoom(roomCode, playerName) {
-                const room = this.rooms[roomCode];
-                
-                if (!room) {
-                    return { success: false, message: 'Sala no encontrada' };
+                try {
+                    const result = await window.storage.get(`room:${roomCode}`, true);
+                    
+                    if (!result || !result.value) {
+                        return { success: false, message: 'Sala no encontrada' };
+                    }
+                    
+                    const room = JSON.parse(result.value);
+                    
+                    if (room.guest) {
+                        return { success: false, message: 'La sala está llena' };
+                    }
+                    
+                    this.roomCode = roomCode;
+                    this.isHost = false;
+                    this.playerName = playerName;
+                    this.opponentName = room.host;
+                    
+                    // Unirse a la sala
+                    room.guest = playerName;
+                    room.status = 'playing';
+                    
+                    await window.storage.set(`room:${roomCode}`, JSON.stringify(room), true);
+                    
+                    return { success: true, hostName: room.host };
+                } catch (error) {
+                    console.error('Error uniéndose a sala:', error);
+                    return { success: false, message: 'Error al conectar' };
                 }
-                
-                if (room.guest) {
-                    return { success: false, message: 'La sala está llena' };
-                }
-                
-                this.roomCode = roomCode;
-                this.isHost = false;
-                this.playerName = playerName;
-                this.opponentName = room.host;
-                
-                // Unirse a la sala
-                room.guest = playerName;
-                room.status = 'playing';
-                
-                return { success: true, hostName: room.host };
             }
 
             startSync() {
                 this.syncInterval = setInterval(() => {
                     this.syncGameState();
-                }, 50); // Sincronizar cada 50ms
+                }, 100); // Sincronizar cada 100ms
             }
 
-            syncGameState() {
+            async syncGameState() {
                 if (!game.player1 || !game.player2) return;
                 
-                const room = this.rooms[this.roomCode];
-                if (!room) return;
-                
-                if (this.isHost) {
-                    // El host envía el estado completo del juego
-                    room.gameState = {
-                        p1: game.player1.getState(),
-                        p2: game.player2.getState(),
-                        level: game.level,
-                        timer: game.timer,
-                        timestamp: Date.now()
-                    };
-                } else {
-                    // El invitado actualiza su juego con el estado del host
-                    if (room.gameState) {
-                        game.player1.setState(room.gameState.p2); // Invertir perspectiva
-                        game.player2.setState(room.gameState.p1);
-                        game.level = room.gameState.level;
-                        game.timer = room.gameState.timer;
+                try {
+                    if (this.isHost) {
+                        // El host envía el estado completo del juego
+                        const gameState = {
+                            p1: game.player1.getState(),
+                            p2: game.player2.getState(),
+                            level: game.level,
+                            timer: game.timer,
+                            timestamp: Date.now()
+                        };
+                        
+                        await window.storage.set(`game:${this.roomCode}`, JSON.stringify(gameState), true);
+                    } else {
+                        // El invitado lee el estado del host
+                        const result = await window.storage.get(`game:${this.roomCode}`, true);
+                        if (result && result.value) {
+                            const gameState = JSON.parse(result.value);
+                            
+                            // Actualizar estado del oponente (invertir perspectiva)
+                            game.player2.setState(gameState.p1);
+                            game.level = gameState.level;
+                            game.timer = gameState.timer;
+                        }
+                        
+                        // El invitado envía su propio estado
+                        const myState = {
+                            p2State: game.player1.getState(),
+                            timestamp: Date.now()
+                        };
+                        await window.storage.set(`player:${this.roomCode}:guest`, JSON.stringify(myState), true);
                     }
+                    
+                    // Si soy host, leer el estado del invitado
+                    if (this.isHost) {
+                        const guestResult = await window.storage.get(`player:${this.roomCode}:guest`, true);
+                        if (guestResult && guestResult.value) {
+                            const guestState = JSON.parse(guestResult.value);
+                            game.player2.setState(guestState.p2State);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error sincronizando:', error);
                 }
             }
 
-            sendAction(action) {
-                const room = this.rooms[this.roomCode];
-                if (!room) return;
-                
-                if (!room.actions) room.actions = [];
-                
-                room.actions.push({
-                    player: this.isHost ? 'host' : 'guest',
-                    action: action,
-                    timestamp: Date.now()
-                });
+            async sendAction(action) {
+                try {
+                    const actionKey = `action:${this.roomCode}:${this.isHost ? 'host' : 'guest'}:${Date.now()}`;
+                    await window.storage.set(actionKey, JSON.stringify({
+                        player: this.isHost ? 'host' : 'guest',
+                        action: action,
+                        timestamp: Date.now()
+                    }), true);
+                } catch (error) {
+                    console.error('Error enviando acción:', error);
+                }
             }
 
             stopSync() {
@@ -767,13 +1018,26 @@
                     clearInterval(this.syncInterval);
                     this.syncInterval = null;
                 }
+                if (this.checkInterval) {
+                    clearInterval(this.checkInterval);
+                    this.checkInterval = null;
+                }
             }
 
-            cleanup() {
+            async cleanup() {
                 this.stopSync();
-                if (this.roomCode && this.rooms[this.roomCode]) {
-                    delete this.rooms[this.roomCode];
+                
+                // Limpiar datos de la sala
+                if (this.roomCode) {
+                    try {
+                        await window.storage.delete(`room:${this.roomCode}`, true);
+                        await window.storage.delete(`game:${this.roomCode}`, true);
+                        await window.storage.delete(`player:${this.roomCode}:guest`, true);
+                    } catch (error) {
+                        console.error('Error limpiando sala:', error);
+                    }
                 }
+                
                 this.roomCode = null;
                 this.isHost = false;
             }
@@ -795,11 +1059,22 @@
             stars: [],
             leaderboard: [],
             multiplayer: new MultiplayerManager(),
+            // Controles móviles
+            joystick: {
+                active: false,
+                x: 0,
+                y: 0,
+                startX: 0,
+                startY: 0
+            },
+            isMobile: false,
 
             init() {
                 this.createStars();
                 this.loadLeaderboard();
                 this.updateLeaderboardDisplay();
+                this.detectMobile();
+                this.setupMobileControls();
                 
                 document.addEventListener('keydown', (e) => {
                     this.keys[e.key.toLowerCase()] = true;
@@ -823,6 +1098,81 @@
                 document.addEventListener('keyup', (e) => {
                     this.keys[e.key.toLowerCase()] = false;
                 });
+            },
+
+            detectMobile() {
+                this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                    || window.innerWidth <= 768;
+            },
+
+            setupMobileControls() {
+                const joystick = document.getElementById('joystick');
+                const joystickStick = document.getElementById('joystickStick');
+                const shootButton = document.getElementById('shootButton');
+
+                // Joystick touch events
+                joystick.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (this.state !== 'playing') return;
+                    
+                    const touch = e.touches[0];
+                    const rect = joystick.getBoundingClientRect();
+                    this.joystick.startX = rect.left + rect.width / 2;
+                    this.joystick.startY = rect.top + rect.height / 2;
+                    this.joystick.active = true;
+                    this.updateJoystick(touch.clientX, touch.clientY, joystickStick);
+                });
+
+                joystick.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    if (!this.joystick.active || this.state !== 'playing') return;
+                    const touch = e.touches[0];
+                    this.updateJoystick(touch.clientX, touch.clientY, joystickStick);
+                });
+
+                joystick.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    this.joystick.active = false;
+                    this.joystick.x = 0;
+                    this.joystick.y = 0;
+                    joystickStick.style.transform = 'translate(-50%, -50%)';
+                });
+
+                // Shoot button
+                shootButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (this.state !== 'playing' || !this.player1) return;
+                    
+                    if (this.mode === 'online') {
+                        this.multiplayer.sendAction('shoot');
+                    }
+                    this.player1.shoot();
+                });
+
+                // Prevenir scroll en móvil durante el juego
+                document.body.addEventListener('touchmove', (e) => {
+                    if (this.state === 'playing') {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+            },
+
+            updateJoystick(touchX, touchY, stick) {
+                const maxDistance = 50;
+                let dx = touchX - this.joystick.startX;
+                let dy = touchY - this.joystick.startY;
+                
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance > maxDistance) {
+                    dx = (dx / distance) * maxDistance;
+                    dy = (dy / distance) * maxDistance;
+                }
+                
+                this.joystick.x = dx / maxDistance;
+                this.joystick.y = dy / maxDistance;
+                
+                stick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
             },
 
             createStars() {
@@ -876,13 +1226,20 @@
                 }
                 
                 document.getElementById('createRoomBtn').disabled = true;
+                document.getElementById('createRoomBtn').textContent = 'CREANDO...';
                 
-                const roomCode = await this.multiplayer.createRoom(hostName);
-                
-                document.getElementById('roomCodeDisplay').textContent = roomCode;
-                document.getElementById('roomCreated').style.display = 'block';
-                
-                this.showMessage('Sala creada exitosamente');
+                try {
+                    const roomCode = await this.multiplayer.createRoom(hostName);
+                    
+                    document.getElementById('roomCodeDisplay').textContent = roomCode;
+                    document.getElementById('roomCreated').style.display = 'block';
+                    
+                    this.showMessage('Sala creada exitosamente');
+                } catch (error) {
+                    alert('Error al crear sala. Intenta de nuevo.');
+                    document.getElementById('createRoomBtn').disabled = false;
+                    document.getElementById('createRoomBtn').textContent = 'CREAR SALA';
+                }
             },
 
             copyRoomCode() {
@@ -940,6 +1297,11 @@
                 
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
                 document.getElementById('hud').classList.add('active');
+                
+                // Mostrar controles móviles si es necesario
+                if (this.isMobile) {
+                    document.getElementById('mobileControls').classList.add('active');
+                }
                 
                 this.player1 = new Ship(canvas.width / 2, canvas.height - 100, '#00ffff', true);
                 
@@ -1014,10 +1376,17 @@
                     }
                 });
 
+                // Controles de teclado para Player 1
                 if (this.keys['w']) this.player1.y -= this.player1.speed;
                 if (this.keys['s']) this.player1.y += this.player1.speed;
                 if (this.keys['a']) this.player1.x -= this.player1.speed;
                 if (this.keys['d']) this.player1.x += this.player1.speed;
+                
+                // Controles táctiles para Player 1 (móvil)
+                if (this.isMobile && this.joystick.active) {
+                    this.player1.x += this.joystick.x * this.player1.speed;
+                    this.player1.y += this.joystick.y * this.player1.speed;
+                }
                 
                 if (this.mode === 'local') {
                     if (this.keys['arrowup']) this.player2.y -= this.player2.speed;
@@ -1169,6 +1538,12 @@
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
                 document.getElementById('menuScreen').classList.add('active');
                 document.getElementById('hud').classList.remove('active');
+                document.getElementById('mobileControls').classList.remove('active');
+                
+                // Reset joystick
+                this.joystick.active = false;
+                this.joystick.x = 0;
+                this.joystick.y = 0;
                 
                 // Reset formularios
                 document.getElementById('hostName').value = '';
