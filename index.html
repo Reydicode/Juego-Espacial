@@ -1292,6 +1292,7 @@
             stars: [],
             leaderboard: [],
             multiplayer: new MultiplayerManager(),
+            storageAvailable: false,
             // Controles móviles
             joystick: {
                 active: false,
@@ -1502,20 +1503,32 @@
                     return;
                 }
                 
-                document.getElementById('createRoomBtn').disabled = true;
-                document.getElementById('createRoomBtn').textContent = 'CREANDO...';
+                const createBtn = document.getElementById('createRoomBtn');
+                createBtn.disabled = true;
+                createBtn.textContent = 'CREANDO SALA...';
                 
                 try {
+                    console.log('Iniciando creación de sala para:', hostName);
                     const roomCode = await this.multiplayer.createRoom(hostName);
                     
+                    console.log('Sala creada con código:', roomCode);
                     document.getElementById('roomCodeDisplay').textContent = roomCode;
                     document.getElementById('roomCreated').style.display = 'block';
                     
-                    this.showMessage('Sala creada exitosamente');
+                    this.showMessage('✅ Sala creada exitosamente');
                 } catch (error) {
-                    alert('Error al crear sala. Intenta de nuevo.');
-                    document.getElementById('createRoomBtn').disabled = false;
-                    document.getElementById('createRoomBtn').textContent = 'CREAR SALA';
+                    console.error('Error completo al crear sala:', error);
+                    
+                    // Mostrar error detallado
+                    const errorMsg = error.message || 'Error desconocido al crear la sala';
+                    alert('❌ Error al crear sala:\n\n' + errorMsg + '\n\nPor favor, intenta de nuevo.');
+                    
+                    createBtn.disabled = false;
+                    createBtn.textContent = 'CREAR SALA';
+                    
+                    // Limpiar datos
+                    this.multiplayer.roomCode = null;
+                    this.multiplayer.isHost = false;
                 }
             },
 
